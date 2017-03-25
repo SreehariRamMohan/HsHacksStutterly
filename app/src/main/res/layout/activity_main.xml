@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +12,11 @@
         android:layout_height="wrap_content"
         android:text="Login!"
         tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="230dp" />
+        tools:layout_editor_absoluteY="230dp"
+        android:layout_above="@+id/signup"
+        android:layout_alignLeft="@+id/signup"
+        android:layout_alignStart="@+id/signup"
+        android:layout_marginBottom="39dp" />
 
     <Button
         android:id="@+id/signup"
@@ -20,7 +24,10 @@
         android:layout_height="wrap_content"
         android:text="Sign Up!"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="294dp" />
+        tools:layout_editor_absoluteY="294dp"
+        android:layout_marginBottom="38dp"
+        android:layout_above="@+id/forgot"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/forgot"
@@ -28,5 +35,17 @@
         android:layout_height="wrap_content"
         android:text="Forgot Password"
         tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="382dp" />
-</android.support.constraint.ConstraintLayout>
+        tools:layout_editor_absoluteY="382dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="96dp" />
+
+    <Button
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="skip" />
+</RelativeLayout>

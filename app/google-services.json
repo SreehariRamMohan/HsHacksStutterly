@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1053583165661",
+    "firebase_url": "https://hshacks-d07a3.firebaseio.com",
+    "project_id": "hshacks-d07a3",
+    "storage_bucket": "hshacks-d07a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053583165661:android:73b586681768dc8a",
+        "android_client_info": {
+          "package_name": "com.example.hshacksstutterly.hshacksstutterly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053583165661-ev145vudqvgucl7tt1bq19l1grjknu4s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hshacksstutterly.hshacksstutterly",
+            "certificate_hash": "fce8a1d6271578b4fa8db3bd3704fd11faf586e9"
+          }
+        },
+        {
+          "client_id": "1053583165661-rfbalstkf24ejgq6113dd44e0jum4g1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC8YLIu90bFHo6wEH-Dnol9-ENGPi0988"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053583165661-rfbalstkf24ejgq6113dd44e0jum4g1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

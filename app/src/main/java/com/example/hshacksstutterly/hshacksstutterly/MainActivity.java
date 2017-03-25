@@ -11,6 +11,9 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     Button signup;
     TextView forgot;
+
+    Button skipToHome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         login = (Button)findViewById(R.id.login);
         signup = (Button)findViewById(R.id.signup);
         forgot = (TextView)findViewById(R.id.forgot);
+        skipToHome = (Button) findViewById(R.id.test);
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,5 +36,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SignupActivity.class));
             }
         });
+
+        skipToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+            }
+        });
+
+
+
     }
 }
