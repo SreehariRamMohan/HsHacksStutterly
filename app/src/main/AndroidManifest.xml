@@ -20,7 +20,8 @@
         <activity android:name=".SignupActivity" />
         <activity
             android:name=".HomeScreen"
-            android:label="@string/title_activity_home_screen"></activity>
+            android:label="@string/title_activity_home_screen" />
+        <activity android:name=".SpeechActivity"></activity>
     </application>
 
 </manifest>
