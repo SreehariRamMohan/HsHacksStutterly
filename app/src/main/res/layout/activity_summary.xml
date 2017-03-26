@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/summaryactivitybackground"
     tools:context="com.example.hshacksstutterly.hshacksstutterly.Summary">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_height="50dp"
         android:text="Once you hit approve, we will send the following summary to: "
         tools:layout_editor_absoluteX="1dp"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@android:color/black"
         tools:layout_editor_absoluteY="6dp" />
 
     <Button
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="17dp"
         android:text="Send Email"
-        android:background="@android:color/holo_red_dark"
+        android:background="@android:color/holo_purple"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -30,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="84dp"
-        android:background="@android:color/holo_blue_bright"
+        android:background="@android:color/white"
         android:textColor="@android:color/black"
         android:visibility="visible"
         android:layout_alignParentLeft="true"
