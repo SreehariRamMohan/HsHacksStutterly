@@ -36,6 +36,16 @@ public class PieChart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pie_chart_layout);
 
+
+        ArrayList<String> troubleWordsX = new ArrayList<>();
+        ArrayList<String> frequencyWordsY = new ArrayList<>();
+
+
+
+
+
+
+
         Log.v("Hi", "In pie chart onCreate");
 
         pieChart = (com.github.mikephil.charting.charts.PieChart) findViewById(R.id.pieDAY);
