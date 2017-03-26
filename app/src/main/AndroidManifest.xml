@@ -27,7 +27,8 @@
         <activity android:name=".SpeechActivity" />
         <activity android:name=".Goals" />
         <activity android:name=".Summary" />
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".AnalyzePerformance"></activity>
     </application>
 
 </manifest>

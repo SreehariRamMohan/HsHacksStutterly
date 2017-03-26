@@ -49,6 +49,14 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
+        Button analyzeButton = (Button) findViewById(R.id.analyzeID);
+        analyzeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AnalyzePerformance.class));
+            }
+        });
+
     }
 
 }
