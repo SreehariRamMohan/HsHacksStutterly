@@ -78,6 +78,7 @@ public class SpeechActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                stuttered.clear();
                 //tv1.setText(newer);
                 //tv1.setText("You must say: " + newer);
                 System.out.println("HEY YOU SAID HERE " );
@@ -136,7 +137,7 @@ public class SpeechActivity extends AppCompatActivity {
             tv1.setText("Say: " + newer);
             */
 
-            if(newer.contains("*")) {
+            if(newer.contains("*") || newer.contains("caressed") || newer.contains("slept")) {
                 load.performClick();
             } else {
                 System.out.println("AYYO" + newer);
@@ -209,7 +210,7 @@ public class SpeechActivity extends AppCompatActivity {
                 ref.updateChildren(map);
             System.out.println(System.currentTimeMillis());
 
-            //stuttered.clear();
+
                 //Map<String, Object> map1 = new HashMap<String, Object>();
                 //map1.put("", "");
                 //ref.child(stuttered.get(0)).updateChildren(map1);

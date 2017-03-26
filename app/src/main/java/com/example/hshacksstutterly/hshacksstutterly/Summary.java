@@ -109,7 +109,8 @@ public class Summary extends AppCompatActivity {
                 for (String key : unique) {
                     thenote += "I stuttered: " + key + " " + Collections.frequency(list, key) + " times.";
                 }
-                textView.setText(thenote);
+
+                textView.setText(thenote.substring(4));
                 System.out.println(thenote);
 
             }
