@@ -28,7 +28,8 @@
         <activity android:name=".Goals" />
         <activity android:name=".Summary" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".AnalyzePerformance"></activity>
+        <activity android:name=".AnalyzePerformance" />
+        <activity android:name=".SimpleBarGraph"></activity>
     </application>
 
 </manifest>
