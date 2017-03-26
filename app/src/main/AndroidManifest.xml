@@ -21,7 +21,12 @@
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen" />
-        <activity android:name=".SpeechActivity"></activity>
+        <activity android:name=".SpeechActivity" />
+        <activity android:name=".Goals" />
+        <activity android:name=".Summary"></activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>

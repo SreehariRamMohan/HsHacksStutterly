@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -8,60 +8,40 @@
     android:orientation="vertical"
     tools:context="com.example.hshacksstutterly.hshacksstutterly.HomeScreen">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="match_parent"
+
+    <Button
+        android:id="@+id/practiceID"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/title_home"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        tools:text="Welcome to your Stutterly Portal!" />
+        android:text="Practice"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/logout"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/logout" />
-
-            <Button
-                android:id="@+id/go"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="26dp"
-                android:layout_marginStart="26dp"
-                android:layout_toEndOf="@+id/logout"
-                android:layout_toRightOf="@+id/logout"
-                android:text="Go!" />
-        </RelativeLayout>
-    </FrameLayout>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/analyzeID"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="30dp"
-        android:layout_marginEnd="30dp" />
+        android:text="Analyze Performance"
+        android:layout_above="@+id/practiceID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/sendScoreID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/practiceID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:text="Send Summary" />
+
+    <Button
+        android:id="@+id/goalsID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/analyzeID"
+        android:layout_alignEnd="@+id/practiceID"
+        android:layout_alignRight="@+id/practiceID"
+        android:layout_marginBottom="30dp"
+        android:text="Goals" />
+</RelativeLayout>
