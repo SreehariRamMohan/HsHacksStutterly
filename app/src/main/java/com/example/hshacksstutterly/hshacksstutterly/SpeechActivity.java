@@ -15,7 +15,16 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -26,18 +35,18 @@ public class SpeechActivity extends AppCompatActivity {
     public static int longestindex;
     Button load;
     public static TextView tv;
-    public static TextView tv1;
+
     WebView webview;
     String where;
     int moat;
     String newer = "";
+    int value;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
         start = (Button)findViewById(R.id.start);
         tv = (TextView)findViewById(R.id.textView);
-        tv1 = (TextView)findViewById(R.id.textView3);
         load = (Button)findViewById(R.id.load);
         webview = (WebView)findViewById(R.id.web);
 
@@ -60,7 +69,7 @@ public class SpeechActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv1.setText(newer);
+                //tv1.setText(newer);
                 //tv1.setText("You must say: " + newer);
                 System.out.println("HEY YOU SAID HERE " );
                 startVoiceRecognitionActivity();
@@ -113,7 +122,10 @@ public class SpeechActivity extends AppCompatActivity {
                     newer += html.charAt(i);
                 }
             }
-
+            /*
+            TextView tv1 = (TextView)findViewById(R.id.textView3);
+            tv1.setText("Say: " + newer);
+            */
 
 
             System.out.println("AYYO" + newer);
@@ -230,73 +242,110 @@ public class SpeechActivity extends AppCompatActivity {
            }
        }
        */
+       int timebeenstutter = 0;
         ArrayList<String> wordsstuttered = new ArrayList<>();
         ArrayList<Integer> timesstuttered = new ArrayList<>();
         boolean stutter = false;
+        int offset = 0;
         String wordstutteredmost = "";
         for(int i = 0; i<words.length; i++){
-            for(int j = 0; j<wordsa.length; j++){
-                if(words[i].contains(wordsa[j]) || wordsa[j].contains(wordsa[i]) || partiallyRight(words[i], wordsa[j])){//for now partiallyright does nothing
+            for(int j = i+offset; j<wordsa.length; j++){
+                System.out.println(words[i] + "----" + wordsa[j]);
+                if(words[i].equals(wordsa[j]) || partiallyRight(words[i], wordsa[j])){
+                    //words[i].contains(wordsa[i]) || wordsa[i].contains(words[i]) || partiallyRight(words[i], wordsa[i])){//for now partiallyright does nothing
+                    System.out.println("Debug");
                     if(stutter){
-                        System.out.println(words[i] + "----" + wordsa[j]);
+                        timebeenstutter = 0;
                         wordsstuttered.add(words[i]);
-                        timesstuttered.add(detect2(words, wordsa, i, j));
+                        //timesstuttered.add(detect2(words, wordsa, i, j));
+                        int bbb = j-i;
+                        timesstuttered.add(bbb);
                         stutter = false;
+                        System.out.println("Debug2");
                     }
-                    stutter = false;
+
+                    break;
+
+                    //break;
                 }
+                if(timebeenstutter>=2 && words[i].charAt(0) != wordsa[j].charAt(0)){
+
+                    break;
+                }
+                offset++;
                 stutter = true;
             }
         }
-
-        String a1 = "";
-        String b1 = "";
-        for(int i = 0; i<wordsstuttered.size(); i++){
-            if(i!=wordsstuttered.size()-1) {
-                a1.concat(wordsstuttered.get(i) + ", ");
-                b1.concat(timesstuttered.get(i) + " times, ");
-            }
-            else{
-                a1.concat(wordsstuttered.get(i) + ".");
-                b1.concat(timesstuttered.get(i) + " times.");
+        int lol = 0;
+        for(int i = 0; i<timesstuttered.size(); i++){
+            if(timesstuttered.get(i)>lol){
+                wordstutteredmost = wordsstuttered.get(i);
+                value = timesstuttered.get(i);
             }
         }
-        if(wordsstuttered.size()==0) {
-            System.out.println(a1);
-            tv.setText("Good job! All correct! You said" + whattheysaid );
-        }else{
-            tv.setText("You said: " + whattheysaid + ". You stuttered " + a1 + " You stuttered them (respectively)" + b1);
 
+        for(int i = 0; i<timesstuttered.size(); i++){
+            System.out.println(wordsstuttered.get(i) + "," + timesstuttered.get(i));
         }
+        System.out.println("IT MADE IT");
+        tv.setText("You said: " + whattheysaid + ". " + "You stuttered " + wordstutteredmost + " the most");
+        final String what = wordstutteredmost;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Words");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator i = dataSnapshot.getChildren().iterator();
+                while(i.hasNext()){
+                    String key = (((DataSnapshot) i.next()).getKey());
+                    if(key==what){
+                         value += Integer.parseInt((dataSnapshot).child(key).getValue().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put(wordstutteredmost, value);
+        ref.updateChildren(map);
+
 
     }
     public int detect2(String[] a, String[] b, int i, int j){
         char firstchar = a[i].charAt(0);
         int numof = 0;
         for(int x = 0; x<j-i; x++){
-            if(b[i+x].charAt(0) == b[j].charAt(0)){
+            if(b[i+x].charAt(0) == firstchar){
+                System.out.println("Worked!");
                 numof++;
             }
         }
         return numof;
     }
-
+    //lets say a word isnt stuttered but it sounds like it is. If the algorithm finds no words with the same first letter for 2 words then it skips the word, counting it as a mistake
     public boolean partiallyRight(String original, String user){
         char[] a = original.toCharArray();
         char[] b = user.toCharArray();
         //hardcoded value of 60%
         int num = 0;
-        int den = b.length;
+        int den = a.length;
         for(int i = 0; i<a.length; i++){
+            /*
             for(int j = 0; j<b.length; j++){
                 if(b[j] == a[i]) num++;
             }
+            */
+            if(a[i]==b[i])num++;
         }
         double frac = num/den;
-        //if(frac>0.6) return true;
-        return false;
-    }
 
+        if(frac>0.6) return true;
+        else return false;
+    }
+// WHENEVER THE LOAD BUTTON IS PRESSED IT AUTOMATICALLY SHOWS THE TEXT. CHANGE THE VALUE WITHIN FIREBASE, AND HAVE A VALUE EVENT LISTENER IN ONCREATE
 
 
 }
