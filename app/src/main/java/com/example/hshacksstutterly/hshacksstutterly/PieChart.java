@@ -17,8 +17,18 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class PieChart extends AppCompatActivity {
@@ -29,7 +39,8 @@ public class PieChart extends AppCompatActivity {
     private String[] xData = {"Mitch", "Jessica", "Mohamed", "Kelsey", "Sam", "Ashley", "Robert"};
     com.github.mikephil.charting.charts.PieChart pieChart;
 
-
+    ArrayList<String> troubleWordsX = new ArrayList<>();
+    ArrayList<String> frequencyWordsY = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +48,46 @@ public class PieChart extends AppCompatActivity {
         setContentView(R.layout.pie_chart_layout);
 
 
-        ArrayList<String> troubleWordsX = new ArrayList<>();
-        ArrayList<String> frequencyWordsY = new ArrayList<>();
 
 
+        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        ref1.child("Words").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> list = new ArrayList<String>();
 
+
+                Iterator i = dataSnapshot.getChildren().iterator();
+
+
+                while(i.hasNext()){
+                    String key = (((DataSnapshot) i.next()).getKey());
+                    for(int m = 0; m<key.length(); m++){
+                        if (!Character.isLetter(key.charAt(m))){
+                            key = key.substring(0, m);
+                        }
+                    }
+
+                    list.add(key);
+
+
+                    //list.get(k).setGoal((((DataSnapshot)i.next()).getKey()).toString());
+
+                }
+                Set<String> unique = new HashSet<String>(list);
+                for (String key : unique) {
+                    troubleWordsX.add(key);
+                    frequencyWordsY.add(String.valueOf(Collections.frequency(list, key)));
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
