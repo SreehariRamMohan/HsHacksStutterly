@@ -44,7 +44,7 @@ public class Summary extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 sendTo = dataSnapshot.getValue().toString();
-                tv.append("\n " + sendTo);
+                tv.append(sendTo);
             }
 
             @Override
