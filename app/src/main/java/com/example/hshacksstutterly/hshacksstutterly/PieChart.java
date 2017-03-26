@@ -121,7 +121,8 @@ public class PieChart extends AppCompatActivity {
 
                 pieChart.setDrawEntryLabels(true);
                 pieChart.setCenterTextSize(10);
-
+                pieChart.setEntryLabelTextSize(20);
+                pieChart.setEntryLabelColor(Color.BLACK);
                 pieChart.setRotationEnabled(true);
                 pieChart.setCenterText("Stuttered Words");
                 pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -179,10 +180,8 @@ public class PieChart extends AppCompatActivity {
 
          Log.v("Size", "The size of array one is " + frequencyWordsY.size() + " and the size of array 2 is " + troubleWordsX.size());
 
-
-
         for(int i = 0; i < yData.length; i++) {
-            yEntry.add(new PieEntry(yData[i]));
+            yEntry.add(new PieEntry(yData[i],xData[i]));
         }
 
         for(int i = 0; i < xData.length; i++) {

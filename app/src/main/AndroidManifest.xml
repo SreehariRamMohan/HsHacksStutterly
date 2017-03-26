@@ -29,7 +29,9 @@
         <activity android:name=".Summary" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".AnalyzePerformance" />
-        <activity android:name=".PieChart"></activity>
+        <activity android:name=".PieChart" />
+        <activity android:name=".CalendarActivity" />
+
     </application>
 
 </manifest>
