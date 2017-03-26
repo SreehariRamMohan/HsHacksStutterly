@@ -1,5 +1,7 @@
 package com.example.hshacksstutterly.hshacksstutterly;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -81,7 +83,14 @@ public class Summary extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, sendTo);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Speech Report");
+                intent.putExtra(Intent.EXTRA_TEXT, thenote);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
             }
         });
 
