@@ -2,6 +2,8 @@ package com.example.hshacksstutterly.hshacksstutterly;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,8 +22,10 @@ import static android.R.id.list;
 
 public class Summary extends AppCompatActivity {
     String sendTo;
-    String goals;
+    String thenote;
     TextView tv;
+    TextView textView;
+    Button send;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +33,9 @@ public class Summary extends AppCompatActivity {
 
 
         //update the approve text view so the user can see who they are sending it to.
-
+        textView = (TextView)findViewById(R.id.textView);
         tv = (TextView) findViewById(R.id.approveTextView);
+        send = (Button)findViewById(R.id.button2);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("TherapistEmail");
         DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("Goals");
 
@@ -49,25 +54,32 @@ public class Summary extends AppCompatActivity {
         ref1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Template> list = new ArrayList<Template>();
+                //ArrayList<String> list = new ArrayList<Template>();
 
 
                 Iterator i = dataSnapshot.getChildren().iterator();
-                Iterator i2 = dataSnapshot.getChildren().iterator();
 
-                int k = 0;
+
                 while(i.hasNext()){
-                    list.add(new Template());
-                    list.get(k).setGoal((((DataSnapshot)i.next()).getKey()).toString());
-                    k++;
-                }
+                    String key = (((DataSnapshot) i.next()).getKey());
+                    String value = ((dataSnapshot).child(key).getValue().toString());
+                    thenote += ("I want to stop stuttering " + key+" by "+value + ". ");
+                    //list.get(k).setGoal((((DataSnapshot)i.next()).getKey()).toString());
 
+                }
+                textView.setText(thenote);
 
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -80,17 +92,5 @@ public class Summary extends AppCompatActivity {
 
     }
 
-    public class Template {
-        String goal;
-        String date;
 
-        public void setGoal(String goal) {
-            this.goal = goal;
-
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-    }
 }
