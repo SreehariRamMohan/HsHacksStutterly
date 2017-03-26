@@ -87,7 +87,7 @@
         android:id="@+id/createGoalButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background=" #ffff00"
+        android:background="#ffffff"
         android:text="Create Goal"
         android:layout_marginTop="31dp"
         android:layout_below="@+id/linearLayout"
