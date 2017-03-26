@@ -237,7 +237,7 @@ public class SpeechActivity extends AppCompatActivity {
         for(int i = 0; i<words.length; i++){
             for(int j = 0; j<wordsa.length; j++){
                 if(words[i].contains(wordsa[j]) || wordsa[j].contains(wordsa[i]) || partiallyRight(words[i], wordsa[j])){//for now partiallyright does nothing
-                    if(stutter=true){
+                    if(stutter){
                         System.out.println(words[i] + "----" + wordsa[j]);
                         wordsstuttered.add(words[i]);
                         timesstuttered.add(detect2(words, wordsa, i, j));
