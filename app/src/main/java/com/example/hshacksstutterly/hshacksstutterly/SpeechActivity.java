@@ -8,6 +8,7 @@ import android.content.pm.ResolveInfo;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -41,10 +42,14 @@ public class SpeechActivity extends AppCompatActivity {
     int moat;
     String newer = "";
     int value;
+
+    ArrayList<String> testArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
+
         start = (Button)findViewById(R.id.start);
         tv = (TextView)findViewById(R.id.textView);
         load = (Button)findViewById(R.id.load);
@@ -150,8 +155,9 @@ public class SpeechActivity extends AppCompatActivity {
             results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
             //System.out.println("HEY YOU SAID " + results.get(0));
-            detect(results);
-
+            detect(results);  //THE REAL ONE
+            // for testing purposes
+            //detect(testArrayList);
 
             //tv.setText("You said: " + theysaid + ". You should have said: " + newer + ". You made " + moat + " errors at the word: " + where );
 
@@ -159,205 +165,57 @@ public class SpeechActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void detect(ArrayList<String> list){
-       /*
-       int longest = 0;//the index of it
-       for(int i = 0; i<list.size(); i++){
-          if(list.get(i).length()>list.get(longest).length() ){
-              longest = i;
-          }
-       }
-       */
-        int longest = 0;//the index of it
-        int sameWordCount = 0;
-        int versionNumber = 0;
-        for(int i = 0; i<list.size(); i++){
-//            if(list.get(i).length()>list.get(longest).length()){
-//                longest = i;
-//            }
-            ArrayList al = new ArrayList();
-            StringTokenizer st = new StringTokenizer(list.get(i), " ");
-            while(st.hasMoreTokens()) {
-                al.add(st.nextToken());
+    public void detect(ArrayList<String> usersword){
+        int longest = 0;
+        int longestindex = 0;
+        for(int i = 0; i<usersword.size(); i++){
+            if(usersword.get(i).length()>longest){
+                longest = usersword.get(i).length();
+                longestindex = i;
             }
-            int repetitions = 0;
-            for(int j = 0; i < al.size(); i++) {
-                String current = al.get(j).toString();
-                for(int k = 0; k < al.size(); k++) {
-                    if(al.get(k) == current) {
-                        repetitions++;
-                    }
+        }
+
+        String[] userswords = usersword.get(longestindex).replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
+        //String[] userswords = "watson hopped on to the up up up up u".replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
+        System.out.println("The tokenized string array is below");
+        for(int i = 0; i < userswords.length; i++) {
+            System.out.print(userswords[i] + " ");
+        }
+        System.out.println("--------------------");
+
+
+        ArrayList<String> stuttered = new ArrayList<>();
+        int counter = 0;
+        for(int i = 0; i<userswords.length-1; i++){
+            if(userswords[i].equals(userswords[i+1])){
+                counter++;
+                System.out.println(userswords[i] + "," + i + "," + counter);
+                if(i + 2 >= userswords.length || !(userswords[i+1].equals(userswords[i]))) {
+                    Log.v("Hi", userswords[i] + "");
+                    counter = 0;
                 }
-                if(repetitions > sameWordCount) {
-                    sameWordCount = repetitions;
-                    versionNumber = j;
+            }else if(!(userswords[i].equals(userswords[i+1])) && counter>=1){
+
+                if(userswords[i].charAt(0) == userswords[i+1].charAt(0) ){
+                    stuttered.add(userswords[i+1]);
+
+                    Log.v("Hi", userswords[i+1] + "");
+                } else if(( (userswords[i].charAt(1) == userswords[i+1].charAt(0)))) {
+                    Log.v("Hi", "Special Case 2nd letter equal to first letter of next word");
+                    System.out.println(userswords[i+1] + " ***");
+                    stuttered.add(userswords[i+1]);
+                } else {
+                    stuttered.add(userswords[i]);
+
+                    Log.v("Hi", userswords[i] + "");
                 }
-
-            }
-
-
-        }
-        /*
-        if(list.get(versionNumber).length()<newer.length()-1){
-            tv.setText("Please try again, repeating the entire sentence.");
-            return;
-        }
-           */
-        String whattheysaid = list.get(versionNumber).toString();
-        String[] words = newer.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");//what is supposed to be said
-        tv.setText(whattheysaid);
-        String[] wordsa = whattheysaid.split(" ");//what they said
-        for(int i =0; i<wordsa.length; i++){
-            wordsa[i] = wordsa[i].toLowerCase();
-            wordsa[i] = wordsa[i].replaceAll("[^a-zA-Z ]", "");
-        }
-        //System.out.println(words.length + "," + wordsa.length);
-
-       /*
-       int currentstutter = 0;
-       String wordstutteredmost = "";
-       int thisstutter = 0;
-       int totalstutter = 0;
-       int totalstutter2 =0;
-       for(int i = 0; i<words.length; i++){
-               String match = words[i];
-           totalstutter2 = 0;
-           for(int j = i+totalstutter; j<wordsa.length; j++){
-               if(wordsa[j].contains(match)){
-                   //System.out.println(match + "," + wordsa[j]);
-                   if(thisstutter>currentstutter){
-                       currentstutter = thisstutter;
-                       wordstutteredmost = wordsa[j];
-                   }
-                   thisstutter = 0;
-                   totalstutter+=totalstutter2;
-                   break;
-               }
-               if(j == wordsa.length-1){
-                   //System.out.println("broke");
-                   totalstutter+=1;
-                   break;
-               }
-               //System.out.println("iterate " + j);
-               totalstutter2++;
-               thisstutter++;
-
-           }
-       }
-       */
-       int timebeenstutter = 0;
-        ArrayList<String> wordsstuttered = new ArrayList<>();
-        ArrayList<Integer> timesstuttered = new ArrayList<>();
-        boolean stutter = false;
-        int offset = 0;
-        String wordstutteredmost = "";
-        for(int i = 0; i<words.length; i++){
-            for(int j = i+offset; j<wordsa.length; j++){
-                System.out.println(words[i] + "----" + wordsa[j]);
-                if(words[i].equals(wordsa[j]) || partiallyRight(words[i], wordsa[j])){
-                    //words[i].contains(wordsa[i]) || wordsa[i].contains(words[i]) || partiallyRight(words[i], wordsa[i])){//for now partiallyright does nothing
-                    System.out.println("Debug");
-                    if(stutter){
-                        timebeenstutter = 0;
-                        wordsstuttered.add(words[i]);
-                        //timesstuttered.add(detect2(words, wordsa, i, j));
-                        int bbb = j-i;
-                        timesstuttered.add(bbb);
-                        stutter = false;
-                        System.out.println("Debug2");
-                    }
-
-                    break;
-
-                    //break;
-                }
-                if(timebeenstutter>=2 && words[i].charAt(0) != wordsa[j].charAt(0)){
-                    ArrayList<String> newWords = new ArrayList<String>();
-                    for(int k = 0; k < words.length; k++) {
-                        newWords.add(words[k]);
-                    }
-                    newWords.remove(i);
-                    words = (String[]) newWords.toArray();
-                    break;
-                }
-                offset++;
-                stutter = true;
-            }
-        }
-        int lol = 0;
-        for(int i = 0; i<timesstuttered.size(); i++){
-            if(timesstuttered.get(i)>lol){
-                wordstutteredmost = wordsstuttered.get(i);
-                value = timesstuttered.get(i);
+                counter = 0;
             }
         }
 
-        for(int i = 0; i<timesstuttered.size(); i++){
-            System.out.println(wordsstuttered.get(i) + "," + timesstuttered.get(i));
-        }
-        System.out.println("IT MADE IT");
-        tv.setText("You said: " + whattheysaid + ". " + "You stuttered " + wordstutteredmost + " the most");
-        final String what = wordstutteredmost;
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Words");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterator i = dataSnapshot.getChildren().iterator();
-                while(i.hasNext()){
-                    String key = (((DataSnapshot) i.next()).getKey());
-                    if(key==what){
-                         value += Integer.parseInt((dataSnapshot).child(key).getValue().toString());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put(wordstutteredmost, value);
-        ref.updateChildren(map);
-
-
-    }
-    public int detect2(String[] a, String[] b, int i, int j){
-        char firstchar = a[i].charAt(0);
-        int numof = 0;
-        for(int x = 0; x<j-i; x++){
-            if(b[i+x].charAt(0) == firstchar){
-                System.out.println("Worked!");
-                numof++;
-            }
-        }
-        return numof;
-    }
-    //lets say a word isnt stuttered but it sounds like it is. If the algorithm finds no words with the same first letter for 2 words then it skips the word, counting it as a mistake
-    public boolean partiallyRight(String original, String user){
-        char[] a = original.toCharArray();
-        char[] b = user.toCharArray();
-        //hardcoded value of 60%
-        int num = 0;
-        int den = a.length;
-        for(int i = 0; i<a.length; i++){
-            /*
-            for(int j = 0; j<b.length; j++){
-                if(b[j] == a[i]) num++;
-            }
-            */
-            if(b.length<i || a.length<i){
-                break;
-            } else if(i > a.length-1 || i > b.length-1) {
-                break;
-            } else if(a[i]==b[i])num++;
-        }
-        double frac = num/den;
-
-        if(frac>0.6) return true;
-        else return false;
     }
 // WHENEVER THE LOAD BUTTON IS PRESSED IT AUTOMATICALLY SHOWS THE TEXT. CHANGE THE VALUE WITHIN FIREBASE, AND HAVE A VALUE EVENT LISTENER IN ONCREATE
 
 
 }
+
