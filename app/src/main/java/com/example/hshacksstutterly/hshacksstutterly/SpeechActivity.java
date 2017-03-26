@@ -206,8 +206,10 @@ public class SpeechActivity extends AppCompatActivity {
             });
     */
                Map<String, Object> map = new HashMap<String, Object>();
-                map.put(stuttered.get(0) + System.currentTimeMillis(), "");
-                ref.updateChildren(map);
+                 if(stuttered.size() != 0) {
+                     map.put(stuttered.get(0) + System.currentTimeMillis(), "");
+                     ref.updateChildren(map);
+                 }
             System.out.println(System.currentTimeMillis());
 
 
@@ -291,8 +293,18 @@ public class SpeechActivity extends AppCompatActivity {
                     stuttered.add(userswords[i]);
 
                     Log.v("Hi", userswords[i] + "");
+
                 }
                 counter = 0;
+
+                if(!stuttered.get(0).isEmpty()) {
+                    TextView tv = (TextView) findViewById(R.id.textView);
+                    tv.setText("You suttered the word " + stuttered.get(0).toString());
+                } else {
+                    TextView tv = (TextView) findViewById(R.id.textView);
+                    tv.setText("Congradulation's you didn't stutter at all");
+
+                }
             }
         }
 
