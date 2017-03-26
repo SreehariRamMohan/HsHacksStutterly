@@ -35,6 +35,7 @@ public class Summary extends AppCompatActivity {
         //update the approve text view so the user can see who they are sending it to.
         textView = (TextView)findViewById(R.id.textView);
         tv = (TextView) findViewById(R.id.approveTextView);
+        textView.setText("");
         send = (Button)findViewById(R.id.button2);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("TherapistEmail");
         DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("Goals");
@@ -68,7 +69,7 @@ public class Summary extends AppCompatActivity {
 
                 }
                 textView.setText(thenote);
-
+                System.out.println(thenote);
 
             }
 
