@@ -127,8 +127,11 @@ public class SpeechActivity extends AppCompatActivity {
             tv1.setText("Say: " + newer);
             */
 
-
-            System.out.println("AYYO" + newer);
+            if(newer.contains("*")) {
+                load.performClick();
+            } else {
+                System.out.println("AYYO" + newer);
+            }
 
         }
     }
@@ -343,7 +346,11 @@ public class SpeechActivity extends AppCompatActivity {
                 if(b[j] == a[i]) num++;
             }
             */
-            if(a[i]==b[i])num++;
+            if(b.length<i || a.length<i){
+                break;
+            } else if(i > a.length-1 || i > b.length-1) {
+                break;
+            } else if(a[i]==b[i])num++;
         }
         double frac = num/den;
 
