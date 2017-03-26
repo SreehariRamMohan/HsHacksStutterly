@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hshacksstutterly.hshacksstutterly">
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -24,10 +26,8 @@
             android:label="@string/title_activity_home_screen" />
         <activity android:name=".SpeechActivity" />
         <activity android:name=".Goals" />
-        <activity android:name=".Summary"></activity>
+        <activity android:name=".Summary" />
+        <activity android:name=".ForgotPassword"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
 
 </manifest>
