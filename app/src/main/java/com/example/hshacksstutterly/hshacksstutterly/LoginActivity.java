@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                                     //Log.w(TAG, "signInWithEmail:failed", task.getException());
                                     Toast.makeText(LoginActivity.this, "Success! Welcome back to Stutterly!",
                                             Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                                    startActivity(new Intent(getApplicationContext(), NavigationMain.class));
                                 }
                                 else if(!task.isSuccessful()){
                                     Toast.makeText(LoginActivity.this, "Login Failed. Please try again!",

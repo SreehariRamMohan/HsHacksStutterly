@@ -11,7 +11,6 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     Button signup;
     TextView forgot;
-
     Button skipToHome;
 
     @Override
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         login = (Button)findViewById(R.id.login);
         signup = (Button)findViewById(R.id.signup);
         forgot = (TextView)findViewById(R.id.forgot);
-        skipToHome = (Button) findViewById(R.id.test);
+        //skipToHome = (Button) findViewById(R.id.test);
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -37,12 +36,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        skipToHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-            }
-        });
 
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override

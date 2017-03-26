@@ -299,7 +299,7 @@ public class SpeechActivity extends AppCompatActivity {
 
                 if(!stuttered.get(0).isEmpty()) {
                     TextView tv = (TextView) findViewById(R.id.textView);
-                    tv.setText("You suttered the word " + stuttered.get(0).toString());
+                    tv.setText("You stuttered the word " + stuttered.get(0).toString());
                 } else {
                     TextView tv = (TextView) findViewById(R.id.textView);
                     tv.setText("Congradulation's you didn't stutter at all");

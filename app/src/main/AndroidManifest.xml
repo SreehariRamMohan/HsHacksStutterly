@@ -31,7 +31,10 @@
         <activity android:name=".AnalyzePerformance" />
         <activity android:name=".PieChart" />
         <activity android:name=".CalendarActivity" />
-
+        <activity
+            android:name=".NavigationMain"
+            android:label="@string/title_activity_navigation_main"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

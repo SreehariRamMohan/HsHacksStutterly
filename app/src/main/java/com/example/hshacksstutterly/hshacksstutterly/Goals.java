@@ -31,31 +31,24 @@ public class Goals extends AppCompatActivity {
     ListView listview;
     ArrayList<String> list = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
-    Button btn;
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("Goals");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals);
-        btn = (Button)findViewById(R.id.button3);
             mWordToQuit =  (EditText) findViewById(R.id.wordToQuitStutteringOn);
-            //mDateToQuitBy = (EditText) findViewById(R.id.dateTOQuitBy);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), CalendarActivity.class));
-            }
-        });
+            mDateToQuitBy = (EditText) findViewById(R.id.dateToQuitBy);
+
         Button submitGoalButton = (Button) findViewById(R.id.createGoalButton);
         submitGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String word = mWordToQuit.getText().toString().trim();
-                //String date = mDateToQuitBy.getText().toString();
+                String date = mDateToQuitBy.getText().toString();
 
 
                 HashMap<String, Object> map = new HashMap<String, Object>();
-                //map.put(word, date);
+                map.put(word, date);
                 ref.updateChildren(map);
 
                 Toast.makeText(getApplicationContext(), "Added your goal to our database",

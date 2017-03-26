@@ -20,12 +20,12 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:textColor="@android:color/black"
-            android:text="I want to quit stuttering the word"
-            android:layout_below="@+id/textView2"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="13dp"
+            android:text="I want to quit stuttering the word:"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:id="@+id/wordToQuitStutteringOn"
@@ -42,11 +42,13 @@
             android:textColorHint="@android:color/holo_red_dark"
             android:textSize="12dp" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/dateToQuitBy"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Set The Date!" />
+            android:ems="10"
+            android:hint="Enter the date!"
+            android:inputType="textPersonName" />
 
 
     </LinearLayout>

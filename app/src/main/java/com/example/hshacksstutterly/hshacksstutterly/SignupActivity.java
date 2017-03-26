@@ -88,7 +88,7 @@ public class SignupActivity extends AppCompatActivity {
 
                                     }
 
-                                    startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                                    startActivity(new Intent(getApplicationContext(), NavigationMain.class));
                                 }
                                 else if (!task.isSuccessful()) {
                                     Toast.makeText(SignupActivity.this, "Registration Error. Try a new email address!",
