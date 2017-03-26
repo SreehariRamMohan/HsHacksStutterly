@@ -21,6 +21,7 @@ import static android.R.id.list;
 public class Summary extends AppCompatActivity {
     String sendTo;
     String goals;
+    TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,7 @@ public class Summary extends AppCompatActivity {
 
         //update the approve text view so the user can see who they are sending it to.
 
-        final TextView tv = (TextView) findViewById(R.id.approveTextView);
+        tv = (TextView) findViewById(R.id.approveTextView);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("TherapistEmail");
         DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("Goals");
 

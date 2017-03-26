@@ -28,11 +28,10 @@
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
-        android:background="@android:color/holo_blue_bright"
-        android:textColor="@android:color/black"
         android:layout_height="wrap_content"
-        android:text="Your email to your therapist will show up here once we finish creating it. "
         android:layout_below="@+id/approveTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp" />
+        android:layout_marginTop="85dp"
+        android:background="@android:color/holo_blue_bright"
+        android:textColor="@android:color/black" />
 </RelativeLayout>
