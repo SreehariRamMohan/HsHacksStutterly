@@ -27,21 +27,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class SpeechActivity extends AppCompatActivity {
     final int REQUEST_CODE = 1234;
     ArrayList<String> results;
     Button start;
+    int lmao;
     public static int longestindex;
     Button load;
     public static TextView tv;
+     ArrayList<String> stuttered = new ArrayList<>();
 
     WebView webview;
     String where;
     int moat;
     String newer = "";
     int value;
+    public static ArrayList<String> numbers = new ArrayList<>();
 
     ArrayList<String> testArrayList;
 
@@ -160,7 +164,85 @@ public class SpeechActivity extends AppCompatActivity {
             //detect(testArrayList);
 
             //tv.setText("You said: " + theysaid + ". You should have said: " + newer + ". You made " + moat + " errors at the word: " + where );
+            final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("Words");
 
+
+            //for(lmao = 0; lmao<stuttered.size(); lmao++) {
+                //if it doesnt exist do this
+                /*
+
+                */
+                /*
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    System.out.println(System.currentTimeMillis());
+                    System.out.println(stuttered.get(0));
+                    /*
+                    if(dataSnapshot.child(stuttered.get(0)).exists()){
+                        System.out.println("Pls Work");
+                    }
+
+                    boolean ss = false;
+                    Iterator i = dataSnapshot.getChildren().iterator();
+                    while(i.hasNext()){
+                        String key = ((DataSnapshot)i.next()).getKey();
+                        if(key==stuttered.get(0)){
+                            ss = true;
+                        }
+                    }
+                    if(!ss){
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put(stuttered.get(0), "");
+                        ref.updateChildren(map);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+    */
+               Map<String, Object> map = new HashMap<String, Object>();
+                map.put(stuttered.get(0) + System.currentTimeMillis(), "");
+                ref.updateChildren(map);
+            System.out.println(System.currentTimeMillis());
+
+            //stuttered.clear();
+                //Map<String, Object> map1 = new HashMap<String, Object>();
+                //map1.put("", "");
+                //ref.child(stuttered.get(0)).updateChildren(map1);
+            //}
+
+            /*
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    System.out.println("Went inside onDataChange");
+                    if(stuttered.size()==0)System.out.println("size zero");
+                    Iterator i = dataSnapshot.getChildren().iterator();
+                    while(i.hasNext()){
+                        String key = ((DataSnapshot) i.next()).getKey();
+                           if(stuttered.contains(key)){
+                                Map<String, Object> map = new HashMap<String, Object>();
+                                map.put("", "");
+                                ref.child(key).updateChildren(map);
+                           }
+                          //{
+
+                        //}
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            */
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -184,7 +266,6 @@ public class SpeechActivity extends AppCompatActivity {
         System.out.println("--------------------");
 
 
-        ArrayList<String> stuttered = new ArrayList<>();
         int counter = 0;
         for(int i = 0; i<userswords.length-1; i++){
             if(userswords[i].equals(userswords[i+1])){
@@ -193,6 +274,7 @@ public class SpeechActivity extends AppCompatActivity {
                 if(i + 2 >= userswords.length || !(userswords[i+1].equals(userswords[i]))) {
                     Log.v("Hi", userswords[i] + "");
                     counter = 0;
+                    stuttered.add(userswords[i]);
                 }
             }else if(!(userswords[i].equals(userswords[i+1])) && counter>=1){
 
@@ -212,6 +294,9 @@ public class SpeechActivity extends AppCompatActivity {
                 counter = 0;
             }
         }
+
+
+
 
     }
 // WHENEVER THE LOAD BUTTON IS PRESSED IT AUTOMATICALLY SHOWS THE TEXT. CHANGE THE VALUE WITHIN FIREBASE, AND HAVE A VALUE EVENT LISTENER IN ONCREATE

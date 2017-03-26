@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class Summary extends AppCompatActivity {
         textView.setText("");
         send = (Button)findViewById(R.id.button2);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("TherapistEmail");
-        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("Goals");
+        DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -54,11 +55,11 @@ public class Summary extends AppCompatActivity {
 
             }
         });
-        ref1.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref1.child("Goals").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //ArrayList<String> list = new ArrayList<Template>();
-
+                thenote += "My goals: ";
 
                 Iterator i = dataSnapshot.getChildren().iterator();
 
@@ -66,9 +67,47 @@ public class Summary extends AppCompatActivity {
                 while(i.hasNext()){
                     String key = (((DataSnapshot) i.next()).getKey());
                     String value = ((dataSnapshot).child(key).getValue().toString());
-                    thenote += ("I want to stop stuttering " + key+" by "+value + ". ");
+                    thenote += ("I want to stop stuttering " + key+" by "+value + ". " + '\n');
                     //list.get(k).setGoal((((DataSnapshot)i.next()).getKey()).toString());
 
+                }
+                textView.setText(thenote);
+                System.out.println(thenote);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        ref1.child("Words").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> list = new ArrayList<String>();
+
+
+                Iterator i = dataSnapshot.getChildren().iterator();
+
+
+                while(i.hasNext()){
+                    String key = (((DataSnapshot) i.next()).getKey());
+                    for(int m = 0; m<key.length(); m++){
+                        if (!Character.isLetter(key.charAt(m))){
+                            key = key.substring(0, m);
+                        }
+                    }
+
+                    list.add(key);
+
+
+                    //list.get(k).setGoal((((DataSnapshot)i.next()).getKey()).toString());
+
+                }
+                Set<String> unique = new HashSet<String>(list);
+                for (String key : unique) {
+                    thenote += "I stuttered: " + key + " " + Collections.frequency(list, key) + " times.";
                 }
                 textView.setText(thenote);
                 System.out.println(thenote);
