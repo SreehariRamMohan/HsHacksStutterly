@@ -13,7 +13,7 @@
         android:text="Once you hit approve, we will send the following summary to: "
         tools:layout_editor_absoluteX="1dp"
         android:textColor="@android:color/holo_red_dark"
-        tools:layout_editor_absoluteY="5dp" />
+        tools:layout_editor_absoluteY="6dp" />
 
     <Button
         android:id="@+id/button2"
