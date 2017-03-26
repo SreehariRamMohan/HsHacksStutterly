@@ -5,6 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/homescreenbackground"
     android:orientation="vertical"
     tools:context="com.example.hshacksstutterly.hshacksstutterly.HomeScreen">
 
@@ -14,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Practice"
+        android:background="#ffffff"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -22,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Analyze Performance"
+        android:background="#ffffff"
         android:layout_above="@+id/practiceID"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="23dp" />
@@ -31,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/practiceID"
+        android:background="#ffffff"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:text="Send Summary" />
@@ -40,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/analyzeID"
+        android:background="#ffffff"
         android:layout_alignEnd="@+id/practiceID"
         android:layout_alignRight="@+id/practiceID"
         android:layout_marginBottom="30dp"

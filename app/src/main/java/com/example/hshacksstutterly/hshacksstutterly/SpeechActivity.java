@@ -269,7 +269,12 @@ public class SpeechActivity extends AppCompatActivity {
                     //break;
                 }
                 if(timebeenstutter>=2 && words[i].charAt(0) != wordsa[j].charAt(0)){
-
+                    ArrayList<String> newWords = new ArrayList<String>();
+                    for(int k = 0; k < words.length; k++) {
+                        newWords.add(words[k]);
+                    }
+                    newWords.remove(i);
+                    words = (String[]) newWords.toArray();
                     break;
                 }
                 offset++;
