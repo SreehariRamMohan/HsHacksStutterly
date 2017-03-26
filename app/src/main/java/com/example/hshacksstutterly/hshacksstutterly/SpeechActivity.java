@@ -262,7 +262,7 @@ public class SpeechActivity extends AppCompatActivity {
 
         String[] userswords = usersword.get(longestindex).replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
         //String[] userswords = "watson hopped on to the up up up up u".replaceAll("[^a-zA-Z ]", "").toLowerCase().split(" ");
-        System.out.println("The tokenized string array is below");
+        System.out.println("The tokenized string array is below ");
         for(int i = 0; i < userswords.length; i++) {
             System.out.print(userswords[i] + " ");
         }
